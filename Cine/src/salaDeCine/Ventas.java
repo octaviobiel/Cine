@@ -166,7 +166,7 @@ public class Ventas {
 		}
 	}
 	
-	public static int ocuparButacas(SalaDeCine salita, int asiento) {
+	public static int ocuparButacas(SalaDeCine salita, int asiento, int []lugares) {
 		int contador = 1;
 		for(int i=0; i<4; i++) {
 			for(int j=0; j<5; j++) {
@@ -223,16 +223,20 @@ public class Ventas {
 	
 	public static void gestionarButacas(SalaDeCine salita, int []lugares) {
 		Scanner ingreso = new Scanner(System.in);
-		int pos = 0;
 		System.out.println("Seleccione las butacas donde desea sentarse");
+		int pos = 0;
 		mostrarButacas(salita);
-		int butaquitas =0;
+		int butaquitas = 0;
+		int butacotas = 0;
 		do {
 			int asiento = ingreso.nextInt();
 			if(asiento<=20&&asiento>0) {
-			butaquitas+=ocuparButacas(salita, asiento);
-			lugares[pos] = asiento;
-			pos++;
+			butaquitas+=ocuparButacas(salita, asiento, lugares);
+			if(butaquitas!=butacotas) {
+				lugares[pos] = asiento;
+				pos++;
+				butacotas = butaquitas;
+			}
 			} else {System.out.println("Ha ingresado una butaca incorrecta, por favor reingrese la butaca");}
 			
 		}while(butaquitas<cantEntradas);
